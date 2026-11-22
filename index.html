@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1d4f9f"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>Artemis 2.0 · Ajuste de distribuciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6f9;--card:#fff;--tx:#17202e;--mu:#5b6778;--bd:#d5dce6;--ac:#1d4f9f;--ac2:#d9531e;--hd:#e8edf5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f141b;--card:#18202b;--tx:#e5eaf1;--mu:#97a4b7;--bd:#2b3544;--ac:#6ea8ff;--ac2:#ff9b66;--hd:#212b38;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f141b;--card:#18202b;--tx:#e5eaf1;--mu:#97a4b7;--bd:#2b3544;--ac:#6ea8ff;--ac2:#ff9b66;--hd:#212b38;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "IBM Plex Sans",system-ui,Arial,sans-serif}
+header{padding:22px 16px 14px;max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+h1{margin:0;font-size:28px;letter-spacing:-.5px}h1 b{color:var(--ac2)}header p{margin:2px 0 0;color:var(--mu)}
+main{max-width:1100px;margin:auto;padding:0 16px 40px;display:grid;gap:14px}
+section{background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:14px}
+h2{margin:0 0 10px;font-size:16px}
+textarea{width:100%;min-height:130px;border:1px solid var(--bd);border-radius:4px;background:var(--bg);color:var(--tx);padding:8px;font:13px ui-monospace,Consolas,monospace}
+button,.bt{background:var(--ac);color:#fff;border:0;border-radius:4px;padding:8px 14px;font:inherit;cursor:pointer;display:inline-block}
+button.s,.bt.s{background:transparent;color:var(--ac);border:1px solid var(--ac)}button:focus-visible,input:focus-visible,tr:focus-visible{outline:2px solid var(--ac2);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}input[type=number]{width:80px;padding:6px;border:1px solid var(--bd);border-radius:4px;background:var(--bg);color:var(--tx)}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid var(--bd);padding:5px 8px;text-align:right;white-space:nowrap}th{background:var(--hd)}td:first-child,th:first-child,td:nth-child(2),th:nth-child(2){text-align:left}
+tbody tr{cursor:pointer}tr.on{background:var(--hd);font-weight:600}.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}.g div{background:var(--bg);border:1px solid var(--bd);border-radius:4px;padding:6px 8px}.g span{display:block;color:var(--mu);font-size:12px}
+canvas{width:100%;height:330px;display:block}.mu{color:var(--mu);font-size:13px}code{background:var(--bg);padding:2px 5px;border-radius:3px;word-break:break-all}.err{color:var(--ac2)}
+</style></head><body>
+<header><div><h1>Artemis <b>2.0</b></h1><p>Ajuste de datos a distribuciones de probabilidad</p></div>
+<span class="mu">Equipo Artemis 2.0 · Concurso de Simulación 2026A</span></header>
+<main>
+<section><h2>1. Datos</h2>
+<textarea id="in" placeholder="Pega aquí los datos, uno por línea (también sirven espacios, tabuladores o punto y coma). Se pueden copiar directo desde una columna de Excel."></textarea>
+<div class="row"><button id="go">Ajustar distribuciones</button><button class="s" id="ej">Datos de ejemplo</button>
+<label class="bt s">Cargar CSV / TXT<input id="fl" type="file" accept=".csv,.txt" hidden></label><span id="msg" class="err"></span></div></section>
+<div id="out" style="display:none;gap:14px;display:none">
+<section><h2>2. Estadísticos descriptivos</h2><div class="g" id="st"></div></section>
+<section><h2>3. Resultados del ajuste</h2><div class="tw"><table id="tb"></table></div>
+<p class="mu">Toca una fila para verla en la gráfica. El puntaje suma la posición en cada prueba (menor es mejor). El valor p de K-S y χ² es aproximado, porque los parámetros se estiman con los mismos datos.</p></section>
+<section><h2>4. Gráfica</h2><div class="row" style="margin:0 0 8px"><button class="s" id="m1">Densidad (PDF)</button><button class="s" id="m2">Acumulada (CDF)</button><label class="mu">Clases <input id="nb" type="number" min="3" max="80"></label></div><canvas id="cv"></canvas></section>
+<section><h2>5. Generador de números aleatorios</h2><p class="mu" id="gd"></p>
+<div class="row" style="margin:0 0 8px"><label>Cantidad <input id="gn" type="number" value="100" min="1" max="10000"></label><button id="gg">Generar</button><button class="s" id="gc">Copiar</button><button class="s" id="gx">Descargar CSV</button></div>
+<textarea id="gt" readonly style="min-height:90px"></textarea>
+<p class="mu">Fórmula para Excel (si tu Excel usa punto y coma, cambia las comas):</p><code id="xl"></code></section>
+</div></main>
+<script>
+const $=i=>document.getElementById(i),sq=Math.sqrt,L=Math.log,E=Math.exp,PI=Math.PI;
+function lg(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,.1208650973866179e-2,-.5395239384953e-5];let y=x,t=x+5.5;t-=(x+.5)*L(t);let s=1.000000000190015;for(let j=0;j<6;j++)s+=c[j]/++y;return -t+L(2.5066282746310005*s/x)}
+function gP(a,x){if(x<=0)return 0;const pre=E(-x+a*L(x)-lg(a));if(x<a+1){let s=1/a,d=s,n=a;for(let i=0;i<500;i++){n++;d*=x/n;s+=d;if(Math.abs(d)<Math.abs(s)*1e-14)break}return s*pre}
+let b=x+1-a,c=1e300,d=1/b,h=d;for(let i=1;i<500;i++){const an=-i*(i-a);b+=2;d=an*d+b;if(Math.abs(d)<1e-300)d=1e-300;c=b+an/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const dl=d*c;h*=dl;if(Math.abs(dl-1)<1e-14)break}return 1-pre*h}
+function bcf(a,b,x){const qab=a+b,qap=a+1,qam=a-1;let c=1,d=1-qab*x/qap;if(Math.abs(d)<1e-300)d=1e-300;d=1/d;let h=d;for(let m=1;m<500;m++){const m2=2*m;let aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<1e-300)d=1e-300;c=1+aa/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<1e-300)d=1e-300;c=1+aa/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const dl=d*c;h*=dl;if(Math.abs(dl-1)<1e-14)break}return h}
+function iB(a,b,x){if(x<=0)return 0;if(x>=1)return 1;const bt=E(lg(a+b)-lg(a)-lg(b)+a*L(x)+b*L(1-x));return x<(a+1)/(a+b+2)?bt*bcf(a,b,x)/a:1-bt*bcf(b,a,1-x)/b}
+function dg(x){let r=0;while(x<6){r-=1/x;x++}const f=1/(x*x);return r+L(x)-.5/x-f*(1/12-f*(1/120-f/252))}
+const erf=x=>(x<0?-1:1)*gP(.5,x*x),nC=z=>.5*(1+erf(z/sq(2))),mean=a=>a.reduce((s,v)=>s+v,0)/a.length;
+const sdv=a=>{const m=mean(a);return sq(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-1))};
+const tri=(p,x)=>{const[a,b,c]=p;return x<a||x>b?0:x<c?2*(x-a)/((b-a)*(c-a)):x==c?2/(b-a):2*(b-x)/((b-a)*(b-c))};
+const D=[
+{n:'Normal',pn:['μ','σ'],k:2,ok:s=>1,fit:(x,s)=>[s.m,s.sd],pdf:(p,x)=>E(-((x-p[0])/p[1])**2/2)/(p[1]*sq(2*PI)),cdf:(p,x)=>nC((x-p[0])/p[1]),xl:p=>`=INV.NORM(ALEATORIO(),${p[0]},${p[1]})`},
+{n:'Lognormal',pn:['μ','σ'],k:2,ok:s=>s.min>0,fit:x=>{const l=x.map(L);return[mean(l),sdv(l)]},pdf:(p,x)=>x<=0?0:E(-((L(x)-p[0])/p[1])**2/2)/(x*p[1]*sq(2*PI)),cdf:(p,x)=>x<=0?0:nC((L(x)-p[0])/p[1]),xl:p=>`=INV.LOGNORM(ALEATORIO(),${p[0]},${p[1]})`},
+{n:'Exponencial',pn:['λ'],k:1,ok:s=>s.min>=0,fit:(x,s)=>[1/s.m],pdf:(p,x)=>x<0?0:p[0]*E(-p[0]*x),cdf:(p,x)=>x<0?0:1-E(-p[0]*x),xl:p=>`=-LN(ALEATORIO())/${p[0]}`},
+{n:'Weibull',pn:['k','λ'],k:2,ok:s=>s.min>0,fit:(x,s)=>{const y=x.map(v=>v/s.max),ly=y.map(L),ml=mean(ly);const g=k=>{let a=0,b=0;for(let i=0;i<y.length;i++){const w=y[i]**k;a+=w*ly[i];b+=w}return a/b-1/k-ml};let lo=.05,hi=200;for(let i=0;i<100;i++){const m=(lo+hi)/2;g(m)<0?lo=m:hi=m}const k=(lo+hi)/2;return[k,mean(y.map(v=>v**k))**(1/k)*s.max]},pdf:(p,x)=>x<=0?0:p[0]/p[1]*(x/p[1])**(p[0]-1)*E(-(x/p[1])**p[0]),cdf:(p,x)=>x<=0?0:1-E(-(x/p[1])**p[0]),xl:p=>`=${p[1]}*(-LN(ALEATORIO()))^(1/${p[0]})`},
+{n:'Gamma',pn:['k','θ'],k:2,ok:s=>s.min>0,fit:(x,s)=>{const sl=L(s.m)-mean(x.map(L));let lo=1e-3,hi=1e5;for(let i=0;i<100;i++){const m=(lo+hi)/2;L(m)-dg(m)>sl?lo=m:hi=m}const k=(lo+hi)/2;return[k,s.m/k]},pdf:(p,x)=>x<=0?0:E((p[0]-1)*L(x)-x/p[1]-lg(p[0])-p[0]*L(p[1])),cdf:(p,x)=>x<=0?0:gP(p[0],x/p[1]),xl:p=>`=INV.GAMMA(ALEATORIO(),${p[0]},${p[1]})`},
+{n:'Uniforme',pn:['a','b'],k:2,ok:s=>s.max>s.min,fit:(x,s)=>[s.min,s.max],pdf:(p,x)=>x<p[0]||x>p[1]?0:1/(p[1]-p[0]),cdf:(p,x)=>x<p[0]?0:x>p[1]?1:(x-p[0])/(p[1]-p[0]),xl:p=>`=${p[0]}+(${p[1]}-${p[0]})*ALEATORIO()`},
+{n:'Triangular',pn:['a','b','c'],k:3,ok:s=>s.max>s.min,fit:(x,s)=>[s.min,s.max,Math.min(s.max,Math.max(s.min,3*s.m-s.min-s.max))],pdf:tri,cdf:(p,x)=>{const[a,b,c]=p;return x<=a?0:x>=b?1:x<=c?(x-a)**2/((b-a)*(c-a)):1-(b-x)**2/((b-a)*(b-c))},xl:p=>`=SI(ALEATORIO()<${(p[2]-p[0])/(p[1]-p[0])}, ${p[0]}+RAIZ(ALEATORIO()*${(p[1]-p[0])*(p[2]-p[0])}), ${p[1]}-RAIZ((1-ALEATORIO())*${(p[1]-p[0])*(p[1]-p[2])}))  (aprox.: mejor usar una sola celda con u=ALEATORIO())`},
+{n:'Logística',pn:['μ','s'],k:2,ok:s=>1,fit:(x,s)=>[s.m,s.sd*sq(3)/PI],pdf:(p,x)=>{const z=E(-(x-p[0])/p[1]);return z/(p[1]*(1+z)**2)},cdf:(p,x)=>1/(1+E(-(x-p[0])/p[1])),xl:p=>`=${p[0]}+${p[1]}*LN(ALEATORIO()/(1-ALEATORIO()))  (usa la misma u en ambas)`},
+{n:'Gumbel (máx.)',pn:['μ','β'],k:2,ok:s=>1,fit:(x,s)=>{const b=s.sd*sq(6)/PI;return[s.m-.5772157*b,b]},pdf:(p,x)=>{const z=(x-p[0])/p[1];return E(-(z+E(-z)))/p[1]},cdf:(p,x)=>E(-E(-(x-p[0])/p[1])),xl:p=>`=${p[0]}-${p[1]}*LN(-LN(ALEATORIO()))`},
+{n:'Beta',pn:['α','β','mín','máx'],k:4,ok:s=>s.max>s.min,fit:(x,s)=>{const r=s.max-s.min,lo=s.min-.01*r,hi=s.max+.01*r,y=x.map(v=>(v-lo)/(hi-lo)),m=mean(y),v=sdv(y)**2,c=m*(1-m)/v-1;if(!(c>0))throw 0;return[m*c,(1-m)*c,lo,hi]},pdf:(p,x)=>{const y=(x-p[2])/(p[3]-p[2]);return y<=0||y>=1?0:E((p[0]-1)*L(y)+(p[1]-1)*L(1-y)+lg(p[0]+p[1])-lg(p[0])-lg(p[1]))/(p[3]-p[2])},cdf:(p,x)=>iB(p[0],p[1],(x-p[2])/(p[3]-p[2])),xl:p=>`=INV.BETA.N(ALEATORIO(),${p[0]},${p[1]},${p[2]},${p[3]})`}];
+let R=[],X=[],S={},sel=0,mode='pdf',NB=10;
+const fm=v=>+(+v).toPrecision(5),fx=v=>isFinite(v)?(Math.abs(v)>=1e5||Math.abs(v)<1e-3&&v!=0?v.toExponential(3):fm(v)):'—';
+function stats(x){const n=x.length,m=mean(x),sd=sdv(x),s3=mean(x.map(v=>((v-m)/sd)**3)),s4=mean(x.map(v=>((v-m)/sd)**4));return{n,m,sd,min:x[0],max:x[n-1],med:n%2?x[(n-1)/2]:(x[n/2-1]+x[n/2])/2,sk:s3,ku:s4-3,q1:x[Math.floor(.25*(n-1))],q3:x[Math.floor(.75*(n-1))]}}
+function test(d,p,x){const n=x.length,F=x.map(v=>Math.min(1-1e-12,Math.max(1e-12,d.cdf(p,v))));if(F.some(isNaN))throw 0;
+let ks=0,ad=0;for(let i=0;i<n;i++){ks=Math.max(ks,(i+1)/n-F[i],F[i]-i/n);ad+=(2*i+1)*(L(F[i])+L(1-F[n-1-i]))}ad=-n-ad/n;
+const lam=(sq(n)+.12+.11/sq(n))*ks;let kp=0;for(let j=1;j<100;j++)kp+=2*(-1)**(j-1)*E(-2*j*j*lam*lam);kp=Math.min(1,Math.max(0,kp));
+const e=edges(),ob=new Array(NB).fill(0);x.forEach(v=>{let b=Math.floor((v-e[0])/(e[1]-e[0]));ob[Math.min(NB-1,Math.max(0,b))]++});
+const Fe=i=>i==0?0:i==NB?1:d.cdf(p,e[0]+i*(e[1]-e[0]));let O=[],Ex=[],co=0,ce=0;
+for(let i=0;i<NB;i++){co+=ob[i];ce+=n*(Fe(i+1)-Fe(i));if(ce>=5){O.push(co);Ex.push(ce);co=ce=0}}
+if(ce>0||co>0){if(Ex.length){O[O.length-1]+=co;Ex[Ex.length-1]+=ce}else{O.push(co);Ex.push(ce)}}
+const ch=O.reduce((s,o,i)=>s+(o-Ex[i])**2/Ex[i],0),df=O.length-1-d.k;return{ks,kp,ad,ch,cp:df>=1?1-gP(df/2,ch/2):NaN,df}}
+const edges=()=>{const r=S.max-S.min||1;return[S.min,r/NB]};
+function run(){const msg=$('msg');msg.textContent='';
+const x=$('in').value.replace(/,/g,'.').split(/[\s;]+/).filter(s=>s!=='').map(Number);
+if(x.some(isNaN)){msg.textContent='Hay valores que no son números. Revisa los datos.';return}
+if(x.length<8){msg.textContent='Se necesitan al menos 8 datos.';return}
+X=x.sort((a,b)=>a-b);S=stats(X);if(S.max==S.min){msg.textContent='Todos los datos son iguales.';return}
+NB=Math.max(3,Math.ceil(1+3.322*Math.log10(S.n)));$('nb').value=NB;calc();$('out').style.display='grid';$('out').scrollIntoView({behavior:'smooth'})}
+function calc(){R=[];D.forEach(d=>{try{if(!d.ok(S))return;const p=d.fit(X,S);if(p.some(v=>!isFinite(v)))return;const t=test(d,p,X);if(isNaN(t.ad)||!isFinite(t.ad))return;R.push({d,p,...t})}catch(e){}});
+['ks','ad','ch'].forEach(k=>{const o=[...R].sort((a,b)=>a[k]-b[k]);o.forEach((r,i)=>r['r'+k]=i+1)});
+R.forEach(r=>r.sc=r.rks+r.rad+r.rch);R.sort((a,b)=>a.sc-b.sc||a.ad-b.ad);sel=0;render()}
+function render(){const g=[['Datos',S.n],['Media',fx(S.m)],['Desv. estándar',fx(S.sd)],['Mínimo',fx(S.min)],['Q1',fx(S.q1)],['Mediana',fx(S.med)],['Q3',fx(S.q3)],['Máximo',fx(S.max)],['Asimetría',fx(S.sk)],['Curtosis (exceso)',fx(S.ku)]];
+$('st').innerHTML=g.map(a=>`<div><span>${a[0]}</span>${a[1]}</div>`).join('');
+$('tb').innerHTML='<thead><tr><th>#</th><th>Distribución</th><th>Parámetros</th><th>K-S D</th><th>K-S p</th><th>A-D A²</th><th>χ²</th><th>χ² p</th><th>Puntaje</th></tr></thead><tbody>'+R.map((r,i)=>`<tr tabindex="0" data-i="${i}" class="${i==sel?'on':''}"><td>${i+1}</td><td>${r.d.n}</td><td>${r.d.pn.map((n,j)=>n+' = '+fx(r.p[j])).join(', ')}</td><td>${fx(r.ks)} (${r.rks})</td><td>${fx(r.kp)}</td><td>${fx(r.ad)} (${r.rad})</td><td>${fx(r.ch)} (${r.rch})</td><td>${fx(r.cp)}</td><td>${r.sc}</td></tr>`).join('')+'</tbody>';
+document.querySelectorAll('#tb tbody tr').forEach(tr=>{const f=()=>{sel=+tr.dataset.i;render()};tr.onclick=f;tr.onkeydown=e=>{if(e.key=='Enter')f()}});
+const r=R[sel];$('gd').textContent='Distribución seleccionada: '+r.d.n+' ('+r.d.pn.map((n,j)=>n+' = '+fx(r.p[j])).join(', ')+')';$('xl').textContent=r.d.xl(r.p.map(fm));draw()}
+function draw(){const c=$('cv'),dpr=devicePixelRatio||1,W=c.clientWidth,H=330;c.width=W*dpr;c.height=H*dpr;const g=c.getContext('2d');g.scale(dpr,dpr);
+const cs=getComputedStyle(document.documentElement),col=n=>cs.getPropertyValue(n).trim(),r=R[sel],pad=.04*(S.max-S.min),x0=S.min-pad,x1=S.max+pad,ml=46,mb=28,mt=10,pw=W-ml-10,ph=H-mb-mt;
+const e=edges(),w=e[1],cnt=new Array(NB).fill(0);X.forEach(v=>cnt[Math.min(NB-1,Math.floor((v-S.min)/w))]++);
+const sx=v=>ml+(v-x0)/(x1-x0)*pw,pts=[];for(let i=0;i<=200;i++){const v=x0+(x1-x0)*i/200;pts.push([v,mode=='pdf'?r.d.pdf(r.p,v):r.d.cdf(r.p,v)])}
+let ym=mode=='pdf'?Math.max(...cnt.map(k=>k/(S.n*w)),...pts.map(q=>q[1])):1;ym*=1.08;const sy=v=>mt+ph-v/ym*ph;
+g.font='12px sans-serif';g.strokeStyle=col('--bd');g.fillStyle=col('--mu');g.lineWidth=1;
+for(let i=0;i<=5;i++){const yy=mt+ph-ph*i/5;g.beginPath();g.moveTo(ml,yy);g.lineTo(ml+pw,yy);g.stroke();g.textAlign='right';g.fillText(fx(ym*i/5),ml-4,yy+4);const xv=x0+(x1-x0)*i/5;g.textAlign='center';g.fillText(fx(xv),sx(xv),H-8)}
+if(mode=='pdf'){g.fillStyle=col('--ac');g.globalAlpha=.35;cnt.forEach((k,i)=>{const a=sx(S.min+i*w),b=sx(S.min+(i+1)*w),h=k/(S.n*w);g.fillRect(a,sy(h),b-a-1,ph+mt-sy(h))});g.globalAlpha=1}
+else{g.strokeStyle=col('--ac');g.lineWidth=2;g.beginPath();g.moveTo(sx(x0),sy(0));X.forEach((v,i)=>{g.lineTo(sx(v),sy(i/S.n));g.lineTo(sx(v),sy((i+1)/S.n))});g.lineTo(sx(x1),sy(1));g.stroke()}
+g.strokeStyle=col('--ac2');g.lineWidth=2.5;g.beginPath();pts.forEach((q,i)=>i?g.lineTo(sx(q[0]),sy(q[1])):g.moveTo(sx(q[0]),sy(q[1])));g.stroke();
+g.fillStyle=col('--ac2');g.textAlign='left';g.fillText(r.d.n+' ajustada',ml+8,mt+14)}
+function quant(r,u){let lo=S.min-50*(S.max-S.min),hi=S.max+50*(S.max-S.min);for(let i=0;i<70;i++){const m=(lo+hi)/2;r.d.cdf(r.p,m)<u?lo=m:hi=m}return(lo+hi)/2}
+$('go').onclick=run;$('m1').onclick=()=>{mode='pdf';draw()};$('m2').onclick=()=>{mode='cdf';draw()};$('nb').onchange=e=>{NB=Math.min(80,Math.max(3,+e.target.value||10));calc()};
+$('fl').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{$('in').value=rd.result;run()};rd.readAsText(f)};
+$('ej').onclick=()=>{let s=12345;const rnd=()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};$('in').value=Array.from({length:200},()=>(10*(-L(1-rnd()))**.5).toFixed(2)).join('\n');run()};
+$('gg').onclick=()=>{const n=Math.min(10000,Math.max(1,+$('gn').value||100)),r=R[sel];$('gt').value=Array.from({length:n},()=>fm(quant(r,Math.random()))).join('\n')};
+$('gc').onclick=()=>{$('gt').select();try{navigator.clipboard.writeText($('gt').value)}catch(e){document.execCommand('copy')}};
+$('gx').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['valor\n'+$('gt').value],{type:'text/csv'}));a.download='artemis_aleatorios.csv';a.click()};
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+addEventListener('resize',()=>{if(R.length)draw()});
+</script></body></html>
