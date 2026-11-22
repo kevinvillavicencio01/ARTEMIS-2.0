@@ -1,110 +1,161 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1d4f9f"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>Artemis 2.0 · Ajuste de distribuciones</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1d4f9f"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<title>Artemis 2.0 · Ajuste de distribuciones</title>
 <style>
-:root{--bg:#f4f6f9;--card:#fff;--tx:#17202e;--mu:#5b6778;--bd:#d5dce6;--ac:#1d4f9f;--ac2:#d9531e;--hd:#e8edf5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f141b;--card:#18202b;--tx:#e5eaf1;--mu:#97a4b7;--bd:#2b3544;--ac:#6ea8ff;--ac2:#ff9b66;--hd:#212b38;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f141b;--card:#18202b;--tx:#e5eaf1;--mu:#97a4b7;--bd:#2b3544;--ac:#6ea8ff;--ac2:#ff9b66;--hd:#212b38;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "IBM Plex Sans",system-ui,Arial,sans-serif}
-header{padding:22px 16px 14px;max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
-h1{margin:0;font-size:28px;letter-spacing:-.5px}h1 b{color:var(--ac2)}header p{margin:2px 0 0;color:var(--mu)}
-main{max-width:1100px;margin:auto;padding:0 16px 40px;display:grid;gap:14px}
-section{background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:14px}
-h2{margin:0 0 10px;font-size:16px}
-textarea{width:100%;min-height:130px;border:1px solid var(--bd);border-radius:4px;background:var(--bg);color:var(--tx);padding:8px;font:13px ui-monospace,Consolas,monospace}
-button,.bt{background:var(--ac);color:#fff;border:0;border-radius:4px;padding:8px 14px;font:inherit;cursor:pointer;display:inline-block}
-button.s,.bt.s{background:transparent;color:var(--ac);border:1px solid var(--ac)}button:focus-visible,input:focus-visible,tr:focus-visible{outline:2px solid var(--ac2);outline-offset:2px}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}input[type=number]{width:80px;padding:6px;border:1px solid var(--bd);border-radius:4px;background:var(--bg);color:var(--tx)}
-.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid var(--bd);padding:5px 8px;text-align:right;white-space:nowrap}th{background:var(--hd)}td:first-child,th:first-child,td:nth-child(2),th:nth-child(2){text-align:left}
-tbody tr{cursor:pointer}tr.on{background:var(--hd);font-weight:600}.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}.g div{background:var(--bg);border:1px solid var(--bd);border-radius:4px;padding:6px 8px}.g span{display:block;color:var(--mu);font-size:12px}
-canvas{width:100%;height:330px;display:block}.mu{color:var(--mu);font-size:13px}code{background:var(--bg);padding:2px 5px;border-radius:3px;word-break:break-all}.err{color:var(--ac2)}
+:root{--bg:#eef1f5;--cd:#fff;--tx:#18212f;--mu:#5b6778;--bd:#c9d1dd;--ac:#1d4f9f;--a2:#d9531e;--hd:#dde5f0;--ti:#173d7a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f141b;--cd:#18202b;--tx:#e5eaf1;--mu:#97a4b7;--bd:#2c3644;--ac:#6ea8ff;--a2:#ff9b66;--hd:#222c3a;--ti:#101a2b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f141b;--cd:#18202b;--tx:#e5eaf1;--mu:#97a4b7;--bd:#2c3644;--ac:#6ea8ff;--a2:#ff9b66;--hd:#222c3a;--ti:#101a2b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 "Segoe UI",system-ui,Arial,sans-serif}
+#bar{background:var(--ti);color:#fff;padding:8px 14px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}#bar b{font-size:19px}#bar b i{color:#ff9b66;font-style:normal}#bar span{font-size:12px;opacity:.8}
+#tabs{display:flex;gap:2px;background:var(--hd);padding:6px 8px 0;border-bottom:1px solid var(--bd);overflow-x:auto}
+#tabs button{background:transparent;color:var(--tx);border:1px solid transparent;border-bottom:0;border-radius:5px 5px 0 0;padding:7px 14px;font:inherit;cursor:pointer;white-space:nowrap}#tabs button.on{background:var(--cd);border-color:var(--bd);font-weight:600;color:var(--ac)}
+.pn{display:none;padding:12px;max-width:1250px;margin:auto}.pn.on{display:block}
+.tb{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;padding:8px;background:var(--cd);border:1px solid var(--bd);border-radius:5px}
+button.b,label.b{background:var(--ac);color:#fff;border:0;border-radius:4px;padding:7px 13px;font:inherit;cursor:pointer}button.s,label.s{background:var(--cd);color:var(--ac);border:1px solid var(--ac)}
+button:focus-visible,input:focus-visible,select:focus-visible,td:focus-visible{outline:2px solid var(--a2);outline-offset:1px}
+select,input[type=number],input[type=text]{background:var(--cd);color:var(--tx);border:1px solid var(--bd);border-radius:4px;padding:5px 7px;font:inherit;max-width:100%}input[type=number]{width:96px}
+.bx{background:var(--cd);border:1px solid var(--bd);border-radius:5px;padding:10px;margin-bottom:10px}.bx h3{margin:0 0 8px;font-size:14px}
+.sc{overflow:auto;max-height:62vh;border:1px solid var(--bd);background:var(--cd)}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid var(--bd);padding:4px 8px;text-align:right;white-space:nowrap}th{background:var(--hd);position:sticky;top:0}
+#fr td:nth-child(3),#fr th:nth-child(3),#fr td:nth-child(4),#fr th:nth-child(4){text-align:left}#fr tbody tr.on{background:var(--hd)}
+#gr td[contenteditable]{background:#fffbe0;color:#222;text-align:right;min-width:160px}#gr th:first-child,#gr td:first-child{width:56px;text-align:center;background:var(--hd);color:var(--tx)}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px}.g div{background:var(--bg);border:1px solid var(--bd);border-radius:4px;padding:5px 8px}.g span{display:block;color:var(--mu);font-size:12px}
+canvas{width:100%;height:min(62vh,440px);display:block;background:var(--cd);border:1px solid var(--bd);touch-action:none;cursor:grab}.mu{color:var(--mu);font-size:12.5px}.er{color:var(--a2);font-weight:600}
+textarea{width:100%;min-height:110px;background:var(--cd);color:var(--tx);border:1px solid var(--bd);border-radius:4px;font:12px ui-monospace,Consolas,monospace}.fl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0}.fl label{display:flex;gap:4px;align-items:center}
 </style></head><body>
-<header><div><h1>Artemis <b>2.0</b></h1><p>Ajuste de datos a distribuciones de probabilidad</p></div>
-<span class="mu">Equipo Artemis 2.0 · Concurso de Simulación 2026A</span></header>
-<main>
-<section><h2>1. Datos</h2>
-<textarea id="in" placeholder="Pega aquí los datos, uno por línea (también sirven espacios, tabuladores o punto y coma). Se pueden copiar directo desde una columna de Excel."></textarea>
-<div class="row"><button id="go">Ajustar distribuciones</button><button class="s" id="ej">Datos de ejemplo</button>
-<label class="bt s">Cargar CSV / TXT<input id="fl" type="file" accept=".csv,.txt" hidden></label><span id="msg" class="err"></span></div></section>
-<div id="out" style="display:none;gap:14px;display:none">
-<section><h2>2. Estadísticos descriptivos</h2><div class="g" id="st"></div></section>
-<section><h2>3. Resultados del ajuste</h2><div class="tw"><table id="tb"></table></div>
-<p class="mu">Toca una fila para verla en la gráfica. El puntaje suma la posición en cada prueba (menor es mejor). El valor p de K-S y χ² es aproximado, porque los parámetros se estiman con los mismos datos.</p></section>
-<section><h2>4. Gráfica</h2><div class="row" style="margin:0 0 8px"><button class="s" id="m1">Densidad (PDF)</button><button class="s" id="m2">Acumulada (CDF)</button><label class="mu">Clases <input id="nb" type="number" min="3" max="80"></label></div><canvas id="cv"></canvas></section>
-<section><h2>5. Generador de números aleatorios</h2><p class="mu" id="gd"></p>
-<div class="row" style="margin:0 0 8px"><label>Cantidad <input id="gn" type="number" value="100" min="1" max="10000"></label><button id="gg">Generar</button><button class="s" id="gc">Copiar</button><button class="s" id="gx">Descargar CSV</button></div>
-<textarea id="gt" readonly style="min-height:90px"></textarea>
-<p class="mu">Fórmula para Excel (si tu Excel usa punto y coma, cambia las comas):</p><code id="xl"></code></section>
-</div></main>
+<div id="bar"><b>Artemis <i>2.0</i></b><span>Ajuste de distribuciones de probabilidad · Concurso de Simulación 2026A</span></div>
+<div id="tabs"><button data-t="d" class="on">1 Datos</button><button data-t="e">2 Estadísticas</button><button data-t="f">3 Ajuste</button><button data-t="g">4 Gráficos</button><button data-t="c">5 Calculadora</button><button data-t="r">6 Generador</button><button data-t="h">Ayuda</button></div>
+
+<div class="pn on" id="p-d"><div class="tb"><button class="b" id="go">▶ Ajustar distribuciones</button><label class="b s">Importar CSV / TXT<input id="fi" type="file" accept=".csv,.txt,.tsv" hidden></label><button class="b s" id="ej">Datos de ejemplo</button><button class="b s" id="lm">Limpiar</button><span id="msg" class="er"></span></div>
+<p class="mu">Pega una columna directo desde Excel (Ctrl+V) sobre cualquier celda amarilla, o escribe los datos a mano. Se necesitan al menos 8 valores.</p><div class="sc"><table id="gr"></table></div></div>
+
+<div class="pn" id="p-e"><div class="bx"><h3>Estadísticos descriptivos</h3><div class="g" id="st"></div></div><div class="bx"><h3>Tabla de frecuencias</h3><div class="sc" style="max-height:40vh"><table id="fq"></table></div></div></div>
+
+<div class="pn" id="p-f"><div class="tb">Ordenar por <select id="so"><option value="sc">Puntaje combinado</option><option value="ks">Kolmogorov-Smirnov</option><option value="ad">Anderson-Darling</option><option value="ch">Chi-cuadrado</option></select>Nivel α <select id="al"><option>0.20</option><option>0.10</option><option selected>0.05</option><option>0.02</option><option>0.01</option></select><button class="b s" id="sa">Graficar las 3 mejores</button></div>
+<div class="sc"><table id="fr"></table></div><p class="mu">Marca las distribuciones que quieres ver en la pestaña Gráficos. Puntaje = suma de las posiciones en las tres pruebas (menor es mejor). «Acepta» indica que no se rechaza el ajuste con el nivel α elegido (según los valores p de K-S y χ², aproximados porque los parámetros se estiman con los mismos datos).</p></div>
+
+<div class="pn" id="p-g"><div class="tb"><select id="ct"><option value="pdf">Densidad (PDF) + histograma</option><option value="cdf">Distribución acumulada (CDF)</option><option value="sup">Función de supervivencia</option><option value="haz">Función de riesgo (tasa de falla)</option><option value="chz">Riesgo acumulado</option><option value="pp">Gráfico P-P</option><option value="qq">Gráfico Q-Q</option><option value="dif">Diferencia de probabilidad</option></select><label class="mu">Clases <input id="nb" type="number" min="3" max="100"></label><button class="b s" id="rz">Restablecer zoom</button><button class="b s" id="pg">Guardar PNG</button></div><canvas id="cv"></canvas><div class="mu" id="ro">Rueda del mouse (o pellizco) para zoom y arrastrar para mover. Primero ajusta los datos.</div><div class="fl" id="lg"></div></div>
+
+<div class="pn" id="p-c"><div class="bx"><h3>Visor de distribución y calculadora de probabilidad</h3><div class="fl">Distribución <select id="cc"></select></div><div class="fl" id="cpar"></div>
+<div class="fl"><label>x <input id="cx" type="number" step="any" value="0"></label><label>a <input id="ca" type="number" step="any" value="0"></label><label>b <input id="cb" type="number" step="any" value="1"></label><label>P <input id="cq" type="number" step="any" value="0.5" min="0" max="1"></label><button class="b" id="cg">Calcular</button><button class="b s" id="cm">Agregar como ajuste manual</button></div><div class="g" id="co"></div></div></div>
+
+<div class="pn" id="p-r"><div class="bx"><h3>Generador de números aleatorios</h3><div class="fl">Distribución <select id="gs"></select><label>Cantidad <input id="gn" type="number" value="100" min="1" max="20000"></label><button class="b" id="gg">Generar</button><button class="b s" id="gc">Copiar</button><button class="b s" id="gx">Descargar CSV</button></div><textarea id="gt" readonly></textarea><p class="mu">Se generan por inversión numérica de la función de distribución acumulada de la distribución elegida.</p></div></div>
+
+<div class="pn" id="p-h"><div class="bx"><h3>Guía rápida</h3><p><b>1 Datos.</b> Pega, importa o escribe los datos y pulsa «Ajustar distribuciones».</p><p><b>2 Estadísticas.</b> Resumen descriptivo y tabla de frecuencias con el número de clases del histograma.</p><p><b>3 Ajuste.</b> Cada distribución se ajusta por máxima verosimilitud (algoritmo Nelder-Mead; Uniforme, Triangular y Recíproco con estimadores directos). Se evalúan con Kolmogorov-Smirnov, Anderson-Darling y Chi-cuadrado, y se ordenan por la prueba que elijas.</p><p><b>4 Gráficos.</b> PDF, CDF, supervivencia, riesgo, riesgo acumulado, P-P, Q-Q y diferencia de probabilidad, con varias curvas a la vez, zoom y arrastre.</p><p><b>5 Calculadora.</b> Cambia los parámetros a mano, calcula probabilidades y cuantiles, y agrega el ajuste manual a la tabla.</p><p><b>6 Generador.</b> Muestras aleatorias de la distribución elegida.</p><p class="mu">Distribuciones continuas incluidas (47): Normal, Lognormal (2P y 3P), Exponencial (1P y 2P), Weibull (2P y 3P), Gamma (2P y 3P), Logística, Log-Logística (2P y 3P), Gumbel máx. y mín., Cauchy, Laplace, Rayleigh (1P y 2P), Pareto I y II, Fréchet (2P y 3P), Gaussiana inversa (2P y 3P), Pearson 5 y 6 (2P y 3P), Nakagami (2P y 3P), Fatigue Life (2P y 3P), Chi-cuadrado, t de Student, Beta, Kumaraswamy, Burr (3P y 4P), Dagum (3P y 4P), Función de potencia, Recíproco, Valor Extremo Generalizado, Johnson SU, Secante hiperbólica, Uniforme y Triangular.</p><p class="mu">Equipo Artemis 2.0. Los datos se procesan en tu navegador y no se envían a ningún servidor.</p></div></div>
+
 <script>
-const $=i=>document.getElementById(i),sq=Math.sqrt,L=Math.log,E=Math.exp,PI=Math.PI;
+//M0
+const $=i=>document.getElementById(i),sq=Math.sqrt,L=Math.log,E=Math.exp,PI=Math.PI,at=Math.atan,ash=Math.asinh;
 function lg(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,.1208650973866179e-2,-.5395239384953e-5];let y=x,t=x+5.5;t-=(x+.5)*L(t);let s=1.000000000190015;for(let j=0;j<6;j++)s+=c[j]/++y;return -t+L(2.5066282746310005*s/x)}
-function gP(a,x){if(x<=0)return 0;const pre=E(-x+a*L(x)-lg(a));if(x<a+1){let s=1/a,d=s,n=a;for(let i=0;i<500;i++){n++;d*=x/n;s+=d;if(Math.abs(d)<Math.abs(s)*1e-14)break}return s*pre}
-let b=x+1-a,c=1e300,d=1/b,h=d;for(let i=1;i<500;i++){const an=-i*(i-a);b+=2;d=an*d+b;if(Math.abs(d)<1e-300)d=1e-300;c=b+an/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const dl=d*c;h*=dl;if(Math.abs(dl-1)<1e-14)break}return 1-pre*h}
+function gP(a,x){if(x<=0)return 0;const pre=E(-x+a*L(x)-lg(a));if(x<a+1){let s=1/a,d=s,n=a;for(let i=0;i<500;i++){n++;d*=x/n;s+=d;if(Math.abs(d)<Math.abs(s)*1e-14)break}return s*pre}let b=x+1-a,c=1e300,d=1/b,h=d;for(let i=1;i<500;i++){const an=-i*(i-a);b+=2;d=an*d+b;if(Math.abs(d)<1e-300)d=1e-300;c=b+an/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const dl=d*c;h*=dl;if(Math.abs(dl-1)<1e-14)break}return 1-pre*h}
 function bcf(a,b,x){const qab=a+b,qap=a+1,qam=a-1;let c=1,d=1-qab*x/qap;if(Math.abs(d)<1e-300)d=1e-300;d=1/d;let h=d;for(let m=1;m<500;m++){const m2=2*m;let aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<1e-300)d=1e-300;c=1+aa/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<1e-300)d=1e-300;c=1+aa/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const dl=d*c;h*=dl;if(Math.abs(dl-1)<1e-14)break}return h}
 function iB(a,b,x){if(x<=0)return 0;if(x>=1)return 1;const bt=E(lg(a+b)-lg(a)-lg(b)+a*L(x)+b*L(1-x));return x<(a+1)/(a+b+2)?bt*bcf(a,b,x)/a:1-bt*bcf(b,a,1-x)/b}
-function dg(x){let r=0;while(x<6){r-=1/x;x++}const f=1/(x*x);return r+L(x)-.5/x-f*(1/12-f*(1/120-f/252))}
-const erf=x=>(x<0?-1:1)*gP(.5,x*x),nC=z=>.5*(1+erf(z/sq(2))),mean=a=>a.reduce((s,v)=>s+v,0)/a.length;
-const sdv=a=>{const m=mean(a);return sq(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-1))};
-const tri=(p,x)=>{const[a,b,c]=p;return x<a||x>b?0:x<c?2*(x-a)/((b-a)*(c-a)):x==c?2/(b-a):2*(b-x)/((b-a)*(b-c))};
-const D=[
-{n:'Normal',pn:['μ','σ'],k:2,ok:s=>1,fit:(x,s)=>[s.m,s.sd],pdf:(p,x)=>E(-((x-p[0])/p[1])**2/2)/(p[1]*sq(2*PI)),cdf:(p,x)=>nC((x-p[0])/p[1]),xl:p=>`=INV.NORM(ALEATORIO(),${p[0]},${p[1]})`},
-{n:'Lognormal',pn:['μ','σ'],k:2,ok:s=>s.min>0,fit:x=>{const l=x.map(L);return[mean(l),sdv(l)]},pdf:(p,x)=>x<=0?0:E(-((L(x)-p[0])/p[1])**2/2)/(x*p[1]*sq(2*PI)),cdf:(p,x)=>x<=0?0:nC((L(x)-p[0])/p[1]),xl:p=>`=INV.LOGNORM(ALEATORIO(),${p[0]},${p[1]})`},
-{n:'Exponencial',pn:['λ'],k:1,ok:s=>s.min>=0,fit:(x,s)=>[1/s.m],pdf:(p,x)=>x<0?0:p[0]*E(-p[0]*x),cdf:(p,x)=>x<0?0:1-E(-p[0]*x),xl:p=>`=-LN(ALEATORIO())/${p[0]}`},
-{n:'Weibull',pn:['k','λ'],k:2,ok:s=>s.min>0,fit:(x,s)=>{const y=x.map(v=>v/s.max),ly=y.map(L),ml=mean(ly);const g=k=>{let a=0,b=0;for(let i=0;i<y.length;i++){const w=y[i]**k;a+=w*ly[i];b+=w}return a/b-1/k-ml};let lo=.05,hi=200;for(let i=0;i<100;i++){const m=(lo+hi)/2;g(m)<0?lo=m:hi=m}const k=(lo+hi)/2;return[k,mean(y.map(v=>v**k))**(1/k)*s.max]},pdf:(p,x)=>x<=0?0:p[0]/p[1]*(x/p[1])**(p[0]-1)*E(-(x/p[1])**p[0]),cdf:(p,x)=>x<=0?0:1-E(-(x/p[1])**p[0]),xl:p=>`=${p[1]}*(-LN(ALEATORIO()))^(1/${p[0]})`},
-{n:'Gamma',pn:['k','θ'],k:2,ok:s=>s.min>0,fit:(x,s)=>{const sl=L(s.m)-mean(x.map(L));let lo=1e-3,hi=1e5;for(let i=0;i<100;i++){const m=(lo+hi)/2;L(m)-dg(m)>sl?lo=m:hi=m}const k=(lo+hi)/2;return[k,s.m/k]},pdf:(p,x)=>x<=0?0:E((p[0]-1)*L(x)-x/p[1]-lg(p[0])-p[0]*L(p[1])),cdf:(p,x)=>x<=0?0:gP(p[0],x/p[1]),xl:p=>`=INV.GAMMA(ALEATORIO(),${p[0]},${p[1]})`},
-{n:'Uniforme',pn:['a','b'],k:2,ok:s=>s.max>s.min,fit:(x,s)=>[s.min,s.max],pdf:(p,x)=>x<p[0]||x>p[1]?0:1/(p[1]-p[0]),cdf:(p,x)=>x<p[0]?0:x>p[1]?1:(x-p[0])/(p[1]-p[0]),xl:p=>`=${p[0]}+(${p[1]}-${p[0]})*ALEATORIO()`},
-{n:'Triangular',pn:['a','b','c'],k:3,ok:s=>s.max>s.min,fit:(x,s)=>[s.min,s.max,Math.min(s.max,Math.max(s.min,3*s.m-s.min-s.max))],pdf:tri,cdf:(p,x)=>{const[a,b,c]=p;return x<=a?0:x>=b?1:x<=c?(x-a)**2/((b-a)*(c-a)):1-(b-x)**2/((b-a)*(b-c))},xl:p=>`=SI(ALEATORIO()<${(p[2]-p[0])/(p[1]-p[0])}, ${p[0]}+RAIZ(ALEATORIO()*${(p[1]-p[0])*(p[2]-p[0])}), ${p[1]}-RAIZ((1-ALEATORIO())*${(p[1]-p[0])*(p[1]-p[2])}))  (aprox.: mejor usar una sola celda con u=ALEATORIO())`},
-{n:'Logística',pn:['μ','s'],k:2,ok:s=>1,fit:(x,s)=>[s.m,s.sd*sq(3)/PI],pdf:(p,x)=>{const z=E(-(x-p[0])/p[1]);return z/(p[1]*(1+z)**2)},cdf:(p,x)=>1/(1+E(-(x-p[0])/p[1])),xl:p=>`=${p[0]}+${p[1]}*LN(ALEATORIO()/(1-ALEATORIO()))  (usa la misma u en ambas)`},
-{n:'Gumbel (máx.)',pn:['μ','β'],k:2,ok:s=>1,fit:(x,s)=>{const b=s.sd*sq(6)/PI;return[s.m-.5772157*b,b]},pdf:(p,x)=>{const z=(x-p[0])/p[1];return E(-(z+E(-z)))/p[1]},cdf:(p,x)=>E(-E(-(x-p[0])/p[1])),xl:p=>`=${p[0]}-${p[1]}*LN(-LN(ALEATORIO()))`},
-{n:'Beta',pn:['α','β','mín','máx'],k:4,ok:s=>s.max>s.min,fit:(x,s)=>{const r=s.max-s.min,lo=s.min-.01*r,hi=s.max+.01*r,y=x.map(v=>(v-lo)/(hi-lo)),m=mean(y),v=sdv(y)**2,c=m*(1-m)/v-1;if(!(c>0))throw 0;return[m*c,(1-m)*c,lo,hi]},pdf:(p,x)=>{const y=(x-p[2])/(p[3]-p[2]);return y<=0||y>=1?0:E((p[0]-1)*L(y)+(p[1]-1)*L(1-y)+lg(p[0]+p[1])-lg(p[0])-lg(p[1]))/(p[3]-p[2])},cdf:(p,x)=>iB(p[0],p[1],(x-p[2])/(p[3]-p[2])),xl:p=>`=INV.BETA.N(ALEATORIO(),${p[0]},${p[1]},${p[2]},${p[3]})`}];
-let R=[],X=[],S={},sel=0,mode='pdf',NB=10;
-const fm=v=>+(+v).toPrecision(5),fx=v=>isFinite(v)?(Math.abs(v)>=1e5||Math.abs(v)<1e-3&&v!=0?v.toExponential(3):fm(v)):'—';
-function stats(x){const n=x.length,m=mean(x),sd=sdv(x),s3=mean(x.map(v=>((v-m)/sd)**3)),s4=mean(x.map(v=>((v-m)/sd)**4));return{n,m,sd,min:x[0],max:x[n-1],med:n%2?x[(n-1)/2]:(x[n/2-1]+x[n/2])/2,sk:s3,ku:s4-3,q1:x[Math.floor(.25*(n-1))],q3:x[Math.floor(.75*(n-1))]}}
-function test(d,p,x){const n=x.length,F=x.map(v=>Math.min(1-1e-12,Math.max(1e-12,d.cdf(p,v))));if(F.some(isNaN))throw 0;
-let ks=0,ad=0;for(let i=0;i<n;i++){ks=Math.max(ks,(i+1)/n-F[i],F[i]-i/n);ad+=(2*i+1)*(L(F[i])+L(1-F[n-1-i]))}ad=-n-ad/n;
+const erf=x=>(x<0?-1:1)*gP(.5,x*x),nC=z=>.5*(1+erf(z/sq(2))),mean=a=>a.reduce((s,v)=>s+v,0)/a.length,sdv=a=>{const m=mean(a);return sq(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-1))};
+function stats(x){const n=x.length,m=mean(x),sd=sdv(x)||1e-9,q=u=>{const h=(n-1)*u,i=Math.floor(h);return x[i]+(h-i)*((x[i+1]??x[i])-x[i])};return{n,m,sd,min:x[0],max:x[n-1],med:q(.5),q1:q(.25),q3:q(.75),sk:mean(x.map(v=>((v-m)/sd)**3)),ku:mean(x.map(v=>((v-m)/sd)**4))-3}}
+const mk=(n,t,pn,i,f,c,o=0,fx)=>({n,t,pn,i,f:o&1?(p,x)=>x>0?f(p,x):0:f,c:o&1?(p,x)=>x>0?c(p,x):0:c,sh:o&2,fx});
+const gt=(p,x)=>{const z=(x-p[2])/p[1];if(Math.abs(p[0])<1e-8)return E(-z);const a=1+p[0]*z;return a>0?a**(-1/p[0]):(p[0]>0?Infinity:0)};
+const B=[
+mk('Normal','rp',['μ','σ'],s=>[s.m,s.sd],(p,x)=>E(-(((x-p[0])/p[1])**2)/2)/(p[1]*sq(2*PI)),(p,x)=>nC((x-p[0])/p[1])),
+mk('Lognormal','rp',['μ','σ'],(s,x)=>{const l=x.map(L);return[mean(l),sdv(l)]},(p,x)=>E(-(((L(x)-p[0])/p[1])**2)/2)/(x*p[1]*sq(2*PI)),(p,x)=>nC((L(x)-p[0])/p[1]),3),
+mk('Exponencial','p',['λ'],s=>[1/s.m],(p,x)=>p[0]*E(-p[0]*x),(p,x)=>1-E(-p[0]*x),3),
+mk('Weibull','pp',['k','λ'],s=>[Math.max(.4,1.2*s.m/s.sd),s.m],(p,x)=>p[0]/p[1]*(x/p[1])**(p[0]-1)*E(-((x/p[1])**p[0])),(p,x)=>1-E(-((x/p[1])**p[0])),3),
+mk('Gamma','pp',['k','θ'],s=>[s.m*s.m/s.sd**2,s.sd**2/s.m],(p,x)=>E((p[0]-1)*L(x)-x/p[1]-lg(p[0])-p[0]*L(p[1])),(p,x)=>gP(p[0],x/p[1]),3),
+mk('Logística','rp',['μ','s'],s=>[s.m,s.sd*sq(3)/PI],(p,x)=>{const z=E(-(x-p[0])/p[1]);return z/(p[1]*(1+z)**2)},(p,x)=>1/(1+E(-(x-p[0])/p[1]))),
+mk('Log-Logística','pp',['α','β'],s=>[2,s.med],(p,x)=>p[0]/p[1]*(x/p[1])**(p[0]-1)/(1+(x/p[1])**p[0])**2,(p,x)=>1/(1+(x/p[1])**-p[0]),3),
+mk('Gumbel máx.','rp',['μ','β'],s=>[s.m-.45*s.sd,.78*s.sd],(p,x)=>{const z=(x-p[0])/p[1];return E(-(z+E(-z)))/p[1]},(p,x)=>E(-E(-(x-p[0])/p[1]))),
+mk('Gumbel mín.','rp',['μ','β'],s=>[s.m+.45*s.sd,.78*s.sd],(p,x)=>{const z=(x-p[0])/p[1];return E(z-E(z))/p[1]},(p,x)=>1-E(-E((x-p[0])/p[1]))),
+mk('Cauchy','rp',['x0','γ'],s=>[s.med,(s.q3-s.q1)/2||1],(p,x)=>1/(PI*p[1]*(1+((x-p[0])/p[1])**2)),(p,x)=>.5+at((x-p[0])/p[1])/PI),
+mk('Laplace','rp',['μ','b'],s=>[s.med,s.sd/sq(2)],(p,x)=>E(-Math.abs(x-p[0])/p[1])/(2*p[1]),(p,x)=>x<p[0]?.5*E((x-p[0])/p[1]):1-.5*E(-(x-p[0])/p[1])),
+mk('Rayleigh','p',['σ'],s=>[s.m/1.2533],(p,x)=>x/p[0]**2*E(-x*x/(2*p[0]*p[0])),(p,x)=>1-E(-x*x/(2*p[0]*p[0])),3),
+mk('Pareto I','ps',['α','xm'],s=>[2,s.min-.01*s.sd],(p,x)=>x<p[1]?0:p[0]*p[1]**p[0]/x**(p[0]+1),(p,x)=>x<p[1]?0:1-(p[1]/x)**p[0]),
+mk('Pareto II (Lomax)','pp',['α','β'],s=>[3,2*s.m],(p,x)=>p[0]/p[1]*(1+x/p[1])**-(p[0]+1),(p,x)=>1-(1+x/p[1])**-p[0],1),
+mk('Fréchet','pp',['α','β'],s=>[3,s.med],(p,x)=>p[0]/p[1]*(x/p[1])**(-p[0]-1)*E(-((x/p[1])**-p[0])),(p,x)=>E(-((x/p[1])**-p[0])),3),
+mk('Gaussiana inversa','pp',['λ','μ'],s=>[s.m**3/s.sd**2,s.m],(p,x)=>sq(p[0]/(2*PI*x**3))*E(-p[0]*(x-p[1])**2/(2*p[1]*p[1]*x)),(p,x)=>nC(sq(p[0]/x)*(x/p[1]-1))+E(2*p[0]/p[1])*nC(-sq(p[0]/x)*(x/p[1]+1)),3),
+mk('Pearson 5','pp',['α','β'],s=>{const a=s.m*s.m/s.sd**2+2;return[a,s.m*(a-1)]},(p,x)=>E(p[0]*L(p[1])-(p[0]+1)*L(x)-p[1]/x-lg(p[0])),(p,x)=>1-gP(p[0],p[1]/x),3),
+mk('Pearson 6','ppp',['α1','α2','β'],s=>[3,4,s.m],(p,x)=>{const y=x/p[2];return E((p[0]-1)*L(y)-(p[0]+p[1])*L(1+y)-lg(p[0])-lg(p[1])+lg(p[0]+p[1]))/p[2]},(p,x)=>{const y=x/p[2];return iB(p[0],p[1],y/(1+y))},3),
+mk('Nakagami','pp',['m','Ω'],s=>[1,s.m*s.m+s.sd*s.sd],(p,x)=>E(L(2)+p[0]*L(p[0])+(2*p[0]-1)*L(x)-p[0]*x*x/p[1]-lg(p[0])-p[0]*L(p[1])),(p,x)=>gP(p[0],p[0]*x*x/p[1]),3),
+mk('Fatigue Life','pp',['α','β'],s=>[.5,s.med],(p,x)=>{const a=sq(x/p[1]),b=sq(p[1]/x);return(a+b)/(2*p[0]*x)*E(-(((a-b)/p[0])**2)/2)/sq(2*PI)},(p,x)=>nC((sq(x/p[1])-sq(p[1]/x))/p[0]),3),
+mk('Chi-cuadrado','p',['ν'],s=>[Math.max(1,s.m)],(p,x)=>E((p[0]/2-1)*L(x)-x/2-(p[0]/2)*L(2)-lg(p[0]/2)),(p,x)=>gP(p[0]/2,x/2),1),
+mk('t de Student','prp',['ν','μ','σ'],s=>[5,s.m,s.sd],(p,x)=>{const t=(x-p[1])/p[2];return E(lg((p[0]+1)/2)-lg(p[0]/2))/(sq(p[0]*PI)*p[2])*(1+t*t/p[0])**(-(p[0]+1)/2)},(p,x)=>{const t=(x-p[1])/p[2],q=.5*iB(p[0]/2,.5,p[0]/(p[0]+t*t));return t>0?1-q:q}),
+mk('Beta','ppse',['α','β','a','b'],s=>[2,2,s.min-.01*(s.max-s.min),s.max+.01*(s.max-s.min)],(p,x)=>{const y=(x-p[2])/(p[3]-p[2]);return y<=0||y>=1?0:E((p[0]-1)*L(y)+(p[1]-1)*L(1-y)+lg(p[0]+p[1])-lg(p[0])-lg(p[1]))/(p[3]-p[2])},(p,x)=>iB(p[0],p[1],(x-p[2])/(p[3]-p[2]))),
+mk('Kumaraswamy','ppse',['α','β','a','b'],s=>[2,2,s.min-.01*(s.max-s.min),s.max+.01*(s.max-s.min)],(p,x)=>{const y=(x-p[2])/(p[3]-p[2]);return y<=0||y>=1?0:p[0]*p[1]*y**(p[0]-1)*(1-y**p[0])**(p[1]-1)/(p[3]-p[2])},(p,x)=>{const y=(x-p[2])/(p[3]-p[2]);return y<=0?0:y>=1?1:1-(1-y**p[0])**p[1]}),
+mk('Burr','ppp',['k','α','β'],s=>[1,2,s.med],(p,x)=>p[0]*p[1]/p[2]*(x/p[2])**(p[1]-1)*(1+(x/p[2])**p[1])**-(p[0]+1),(p,x)=>1-(1+(x/p[2])**p[1])**-p[0],3),
+mk('Dagum','ppp',['k','α','β'],s=>[1,2,s.med],(p,x)=>p[0]*p[1]/p[2]*(x/p[2])**(p[0]*p[1]-1)*(1+(x/p[2])**p[1])**-(p[0]+1),(p,x)=>(1+(x/p[2])**-p[1])**-p[0],3),
+mk('Función de potencia','pse',['α','a','b'],s=>[2,s.min-.01*(s.max-s.min),s.max+.01*(s.max-s.min)],(p,x)=>x<p[1]||x>p[2]?0:p[0]*(x-p[1])**(p[0]-1)/(p[2]-p[1])**p[0],(p,x)=>x<p[1]?0:x>p[2]?1:((x-p[1])/(p[2]-p[1]))**p[0]),
+mk('Valor Extremo Generalizado','rpr',['k','σ','μ'],s=>[.1,.78*s.sd,s.m-.45*s.sd],(p,x)=>{const t=gt(p,x);return t===Infinity||t===0?0:t**(1+p[0])*E(-t)/p[1]},(p,x)=>E(-gt(p,x))),
+mk('Johnson SU','rprp',['γ','δ','ξ','λ'],s=>[0,1,s.m,s.sd],(p,x)=>{const u=(x-p[2])/p[3];return p[1]/(p[3]*sq(2*PI)*sq(1+u*u))*E(-((p[0]+p[1]*ash(u))**2)/2)},(p,x)=>nC(p[0]+p[1]*ash((x-p[2])/p[3]))),
+mk('Secante hiperbólica','rp',['μ','σ'],s=>[s.m,s.sd],(p,x)=>1/(2*p[1]*Math.cosh(PI*(x-p[0])/(2*p[1]))),(p,x)=>2/PI*at(E(PI*(x-p[0])/(2*p[1])))),
+mk('Uniforme','rr',['a','b'],0,(p,x)=>x<p[0]||x>p[1]?0:1/(p[1]-p[0]),(p,x)=>x<p[0]?0:x>p[1]?1:(x-p[0])/(p[1]-p[0]),0,s=>[s.min,s.max]),
+mk('Triangular','rrr',['a','b','c'],0,(p,x)=>{const[a,b,c]=p;return x<a||x>b?0:x<c?2*(x-a)/((b-a)*(c-a)):x==c?2/(b-a):2*(b-x)/((b-a)*(b-c))},(p,x)=>{const[a,b,c]=p;return x<=a?0:x>=b?1:x<=c?(x-a)**2/((b-a)*(c-a)):1-(b-x)**2/((b-a)*(b-c))},0,s=>[s.min,s.max,Math.min(s.max,Math.max(s.min,3*s.m-s.min-s.max))]),
+mk('Recíproco','rr',['a','b'],0,(p,x)=>x<p[0]||x>p[1]?0:1/(x*L(p[1]/p[0])),(p,x)=>x<p[0]?0:x>p[1]?1:L(x/p[0])/L(p[1]/p[0]),1,s=>[s.min,s.max])];
+const D=[];B.forEach(b=>{D.push(b);if(b.sh){const k=b.t.length+1,nm=b.n+(b.n=='Exponencial'?' (2P)':' (3P)');if(b.n!='Rayleigh'||1)D.push({n:b.n=='Exponencial'?'Exponencial (2P)':b.n+' (3P)',t:b.t+'s',pn:[...b.pn,'γ'],k,pos:0,i:(s,x)=>{const g=s.min-.2*s.sd,y=x.map(v=>v-g);return[...b.i(stats(y),y),g]},f:(p,x)=>b.f(p.slice(0,-1),x-p[p.length-1]),c:(p,x)=>b.c(p.slice(0,-1),x-p[p.length-1])})}});
+D.forEach(d=>{d.k=d.t.length;if(d.f===undefined)d.k=0});B.forEach(b=>{if(b.t&&!b.sh)b.k=b.t.length});
+let S={},X=[],NB=10,R=[],SEL=new Set;
+function nm(f,x0){const n=x0.length;let P=[x0.slice()];for(let i=0;i<n;i++){const q=x0.slice();q[i]+=Math.abs(q[i])*.1+.1;P.push(q)}let V=P.map(f);for(let it=0;it<300*n;it++){const o=[...Array(n+1).keys()].sort((a,b)=>V[a]-V[b]);P=o.map(i=>P[i]);V=o.map(i=>V[i]);if(Math.abs(V[n]-V[0])<1e-10*(Math.abs(V[0])+1e-10))break;const c=P[0].map((_,j)=>P.slice(0,n).reduce((s,q)=>s+q[j],0)/n),at2=t=>c.map((v,j)=>v+t*(P[n][j]-v)),r=at2(-1),fr=f(r);if(fr<V[0]){const e=at2(-2),fe=f(e);fe<fr?(P[n]=e,V[n]=fe):(P[n]=r,V[n]=fr)}else if(fr<V[n-1]){P[n]=r;V[n]=fr}else{const k=at2(fr<V[n]?-.5:.5),fk=f(k);if(fk<Math.min(fr,V[n])){P[n]=k;V[n]=fk}else for(let i=1;i<=n;i++){P[i]=P[i].map((v,j)=>P[0][j]+.5*(v-P[0][j]));V[i]=f(P[i])}}}return P[0]}
+function fitD(d,x){if(d.fx)return d.fx(S);const T=d.t,r=S.max-S.min||1,tu=(v,i)=>T[i]=='p'?L(Math.max(v,1e-9)):T[i]=='r'?v:T[i]=='s'?L(Math.max(S.min-v,1e-9*r)):L(Math.max(v-S.max,1e-9*r)),tn=(u,i)=>T[i]=='p'?E(u):T[i]=='r'?u:T[i]=='s'?S.min-E(u):S.max+E(u);
+const g=u=>{const p=u.map(tn);let s=0;for(let i=0;i<x.length;i++){const f=d.f(p,x[i]);if(!(f>0))return 1e12;s-=L(f)}return isFinite(s)?s:1e12};let u=d.i(S,x).map(tu);u=nm(g,u);u=nm(g,u);return u.map(tn)}
+const edges=()=>[S.min,(S.max-S.min)/NB||1];
+function test(d,p,x){const n=x.length,F=x.map(v=>Math.min(1-1e-12,Math.max(1e-12,d.c(p,v))));if(F.some(isNaN))throw 0;let ks=0,ad=0;for(let i=0;i<n;i++){ks=Math.max(ks,(i+1)/n-F[i],F[i]-i/n);ad+=(2*i+1)*(L(F[i])+L(1-F[n-1-i]))}ad=-n-ad/n;
 const lam=(sq(n)+.12+.11/sq(n))*ks;let kp=0;for(let j=1;j<100;j++)kp+=2*(-1)**(j-1)*E(-2*j*j*lam*lam);kp=Math.min(1,Math.max(0,kp));
-const e=edges(),ob=new Array(NB).fill(0);x.forEach(v=>{let b=Math.floor((v-e[0])/(e[1]-e[0]));ob[Math.min(NB-1,Math.max(0,b))]++});
-const Fe=i=>i==0?0:i==NB?1:d.cdf(p,e[0]+i*(e[1]-e[0]));let O=[],Ex=[],co=0,ce=0;
-for(let i=0;i<NB;i++){co+=ob[i];ce+=n*(Fe(i+1)-Fe(i));if(ce>=5){O.push(co);Ex.push(ce);co=ce=0}}
-if(ce>0||co>0){if(Ex.length){O[O.length-1]+=co;Ex[Ex.length-1]+=ce}else{O.push(co);Ex.push(ce)}}
-const ch=O.reduce((s,o,i)=>s+(o-Ex[i])**2/Ex[i],0),df=O.length-1-d.k;return{ks,kp,ad,ch,cp:df>=1?1-gP(df/2,ch/2):NaN,df}}
-const edges=()=>{const r=S.max-S.min||1;return[S.min,r/NB]};
-function run(){const msg=$('msg');msg.textContent='';
-const x=$('in').value.replace(/,/g,'.').split(/[\s;]+/).filter(s=>s!=='').map(Number);
-if(x.some(isNaN)){msg.textContent='Hay valores que no son números. Revisa los datos.';return}
-if(x.length<8){msg.textContent='Se necesitan al menos 8 datos.';return}
-X=x.sort((a,b)=>a-b);S=stats(X);if(S.max==S.min){msg.textContent='Todos los datos son iguales.';return}
-NB=Math.max(3,Math.ceil(1+3.322*Math.log10(S.n)));$('nb').value=NB;calc();$('out').style.display='grid';$('out').scrollIntoView({behavior:'smooth'})}
-function calc(){R=[];D.forEach(d=>{try{if(!d.ok(S))return;const p=d.fit(X,S);if(p.some(v=>!isFinite(v)))return;const t=test(d,p,X);if(isNaN(t.ad)||!isFinite(t.ad))return;R.push({d,p,...t})}catch(e){}});
-['ks','ad','ch'].forEach(k=>{const o=[...R].sort((a,b)=>a[k]-b[k]);o.forEach((r,i)=>r['r'+k]=i+1)});
-R.forEach(r=>r.sc=r.rks+r.rad+r.rch);R.sort((a,b)=>a.sc-b.sc||a.ad-b.ad);sel=0;render()}
-function render(){const g=[['Datos',S.n],['Media',fx(S.m)],['Desv. estándar',fx(S.sd)],['Mínimo',fx(S.min)],['Q1',fx(S.q1)],['Mediana',fx(S.med)],['Q3',fx(S.q3)],['Máximo',fx(S.max)],['Asimetría',fx(S.sk)],['Curtosis (exceso)',fx(S.ku)]];
-$('st').innerHTML=g.map(a=>`<div><span>${a[0]}</span>${a[1]}</div>`).join('');
-$('tb').innerHTML='<thead><tr><th>#</th><th>Distribución</th><th>Parámetros</th><th>K-S D</th><th>K-S p</th><th>A-D A²</th><th>χ²</th><th>χ² p</th><th>Puntaje</th></tr></thead><tbody>'+R.map((r,i)=>`<tr tabindex="0" data-i="${i}" class="${i==sel?'on':''}"><td>${i+1}</td><td>${r.d.n}</td><td>${r.d.pn.map((n,j)=>n+' = '+fx(r.p[j])).join(', ')}</td><td>${fx(r.ks)} (${r.rks})</td><td>${fx(r.kp)}</td><td>${fx(r.ad)} (${r.rad})</td><td>${fx(r.ch)} (${r.rch})</td><td>${fx(r.cp)}</td><td>${r.sc}</td></tr>`).join('')+'</tbody>';
-document.querySelectorAll('#tb tbody tr').forEach(tr=>{const f=()=>{sel=+tr.dataset.i;render()};tr.onclick=f;tr.onkeydown=e=>{if(e.key=='Enter')f()}});
-const r=R[sel];$('gd').textContent='Distribución seleccionada: '+r.d.n+' ('+r.d.pn.map((n,j)=>n+' = '+fx(r.p[j])).join(', ')+')';$('xl').textContent=r.d.xl(r.p.map(fm));draw()}
-function draw(){const c=$('cv'),dpr=devicePixelRatio||1,W=c.clientWidth,H=330;c.width=W*dpr;c.height=H*dpr;const g=c.getContext('2d');g.scale(dpr,dpr);
-const cs=getComputedStyle(document.documentElement),col=n=>cs.getPropertyValue(n).trim(),r=R[sel],pad=.04*(S.max-S.min),x0=S.min-pad,x1=S.max+pad,ml=46,mb=28,mt=10,pw=W-ml-10,ph=H-mb-mt;
-const e=edges(),w=e[1],cnt=new Array(NB).fill(0);X.forEach(v=>cnt[Math.min(NB-1,Math.floor((v-S.min)/w))]++);
-const sx=v=>ml+(v-x0)/(x1-x0)*pw,pts=[];for(let i=0;i<=200;i++){const v=x0+(x1-x0)*i/200;pts.push([v,mode=='pdf'?r.d.pdf(r.p,v):r.d.cdf(r.p,v)])}
-let ym=mode=='pdf'?Math.max(...cnt.map(k=>k/(S.n*w)),...pts.map(q=>q[1])):1;ym*=1.08;const sy=v=>mt+ph-v/ym*ph;
-g.font='12px sans-serif';g.strokeStyle=col('--bd');g.fillStyle=col('--mu');g.lineWidth=1;
-for(let i=0;i<=5;i++){const yy=mt+ph-ph*i/5;g.beginPath();g.moveTo(ml,yy);g.lineTo(ml+pw,yy);g.stroke();g.textAlign='right';g.fillText(fx(ym*i/5),ml-4,yy+4);const xv=x0+(x1-x0)*i/5;g.textAlign='center';g.fillText(fx(xv),sx(xv),H-8)}
-if(mode=='pdf'){g.fillStyle=col('--ac');g.globalAlpha=.35;cnt.forEach((k,i)=>{const a=sx(S.min+i*w),b=sx(S.min+(i+1)*w),h=k/(S.n*w);g.fillRect(a,sy(h),b-a-1,ph+mt-sy(h))});g.globalAlpha=1}
-else{g.strokeStyle=col('--ac');g.lineWidth=2;g.beginPath();g.moveTo(sx(x0),sy(0));X.forEach((v,i)=>{g.lineTo(sx(v),sy(i/S.n));g.lineTo(sx(v),sy((i+1)/S.n))});g.lineTo(sx(x1),sy(1));g.stroke()}
-g.strokeStyle=col('--ac2');g.lineWidth=2.5;g.beginPath();pts.forEach((q,i)=>i?g.lineTo(sx(q[0]),sy(q[1])):g.moveTo(sx(q[0]),sy(q[1])));g.stroke();
-g.fillStyle=col('--ac2');g.textAlign='left';g.fillText(r.d.n+' ajustada',ml+8,mt+14)}
-function quant(r,u){let lo=S.min-50*(S.max-S.min),hi=S.max+50*(S.max-S.min);for(let i=0;i<70;i++){const m=(lo+hi)/2;r.d.cdf(r.p,m)<u?lo=m:hi=m}return(lo+hi)/2}
-$('go').onclick=run;$('m1').onclick=()=>{mode='pdf';draw()};$('m2').onclick=()=>{mode='cdf';draw()};$('nb').onchange=e=>{NB=Math.min(80,Math.max(3,+e.target.value||10));calc()};
-$('fl').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{$('in').value=rd.result;run()};rd.readAsText(f)};
-$('ej').onclick=()=>{let s=12345;const rnd=()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};$('in').value=Array.from({length:200},()=>(10*(-L(1-rnd()))**.5).toFixed(2)).join('\n');run()};
-$('gg').onclick=()=>{const n=Math.min(10000,Math.max(1,+$('gn').value||100)),r=R[sel];$('gt').value=Array.from({length:n},()=>fm(quant(r,Math.random()))).join('\n')};
+const e=edges(),ob=new Array(NB).fill(0);x.forEach(v=>ob[Math.min(NB-1,Math.max(0,Math.floor((v-e[0])/e[1])))]++);const Fe=i=>i==0?0:i==NB?1:d.c(p,e[0]+i*e[1]);let O=[],Ex=[],co=0,ce=0;
+for(let i=0;i<NB;i++){co+=ob[i];ce+=n*(Fe(i+1)-Fe(i));if(ce>=5){O.push(co);Ex.push(ce);co=ce=0}}if(ce>0||co>0){if(Ex.length){O[O.length-1]+=co;Ex[Ex.length-1]+=ce}else{O.push(co);Ex.push(ce)}}
+const ch=O.reduce((s,o,i)=>s+(o-Ex[i])**2/Ex[i],0),df=O.length-1-p.length;return{ks,kp,ad,ch,cp:df>=1?1-gP(df/2,ch/2):NaN}}
+function quant(r,u){const w=S.max-S.min;let lo=S.min-60*w,hi=S.max+60*w;for(let i=0;i<80;i++){const m=(lo+hi)/2;r.d.c(r.p,m)<u?lo=m:hi=m}return(lo+hi)/2}
+//M1
+const fm=v=>+(+v).toPrecision(5),fx=v=>isFinite(v)?(Math.abs(v)>=1e6||Math.abs(v)<1e-3&&v!=0?v.toExponential(3):fm(v)):'—',lab=r=>r.d.n+(r.man?' (manual)':'');
+const COL=['#d9531e','#1d7fd9','#2a9d5c','#9b4fd1','#c9a100','#d12f7a'];
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#tabs button,.pn').forEach(e=>e.classList.remove('on'));b.classList.add('on');$('p-'+b.dataset.t).classList.add('on');if(b.dataset.t=='g')draw()});
+const tab=t=>document.querySelector(`#tabs [data-t=${t}]`).click();
+function grid(a){let h='<thead><tr><th>#</th><th>Datos</th></tr></thead><tbody>';for(let i=0;i<Math.max(a.length+25,40);i++)h+=`<tr><td>${i+1}</td><td contenteditable tabindex="0">${a[i]??''}</td></tr>`;$('gr').innerHTML=h+'</tbody>'}
+const cells=()=>[...document.querySelectorAll('#gr td[contenteditable]')];
+$('gr').addEventListener('paste',e=>{e.preventDefault();const t=e.clipboardData.getData('text').replace(/,/g,'.').split(/[\r\n\t;]+/).filter(s=>s.trim()!==''),td=e.target.closest('td[contenteditable]'),st=td?td.parentNode.rowIndex-1:0,c=cells().map(x=>x.textContent);c.splice(st,t.length,...t.map(s=>s.trim()));grid(c)});
+function getData(){const v=cells().map(c=>c.textContent.trim().replace(/,/g,'.')).filter(s=>s!=='');const n=v.map(Number);return n.some(isNaN)?null:n}
+$('fi').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{grid(r.result.replace(/,/g,'.').split(/[\r\n\t;]+/).map(s=>s.trim()).filter(s=>s!==''&&!isNaN(+s)));$('msg').textContent=''};r.readAsText(f)};
+$('lm').onclick=()=>{grid([]);R=[];$('msg').textContent=''};
+$('ej').onclick=()=>{let s=12345;const q=()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};grid(Array.from({length:200},()=>(5+10*(-L(1-q()))**.5).toFixed(2)))};
+$('go').onclick=async()=>{const m=$('msg'),x=getData();if(!x){m.textContent='Hay celdas que no son números.';return}if(x.length<8){m.textContent='Se necesitan al menos 8 datos.';return}
+X=x.sort((a,b)=>a-b);S=stats(X);if(S.max==S.min){m.textContent='Todos los datos son iguales.';return}NB=Math.max(3,Math.ceil(1+3.322*Math.log10(S.n)));$('nb').value=NB;R=[];
+for(let i=0;i<D.length;i++){m.textContent=`Ajustando ${i+1} de ${D.length}…`;await new Promise(r=>setTimeout(r,0));const d=D[i];try{if(d.pos&&0)continue;const ps=(d.n.includes('(3P)')||d.n.includes('(2P)')||!d.sh&&B.includes(d));const p=fitD(d,X);if(p.some(v=>!isFinite(v)))continue;const t=test(d,p,X);if(!isFinite(t.ad))continue;R.push({d,p,...t})}catch(e){}}
+m.textContent='';rank();SEL=new Set([0,1,2].filter(i=>R[i]));fillSel();stat();fit();tab('f')};
+function rank(){['ks','ad','ch'].forEach(k=>{[...R].sort((a,b)=>a[k]-b[k]).forEach((r,i)=>r['r'+k]=i+1)});R.forEach(r=>r.sc=r.rks+r.rad+r.rch);const k=$('so').value;const old=[...SEL].map(i=>R[i]);R.sort((a,b)=>k=='sc'?a.sc-b.sc||a.ad-b.ad:a[k]-b[k]);SEL=new Set(old.map(r=>R.indexOf(r)).filter(i=>i>=0))}
+function stat(){const g=[['Datos',S.n],['Media',S.m],['Mediana',S.med],['Desv. estándar',S.sd],['Varianza',S.sd**2],['Error estándar',S.sd/sq(S.n)],['Coef. variación',S.sd/S.m],['Mínimo',S.min],['Máximo',S.max],['Rango',S.max-S.min],['Q1',S.q1],['Q3',S.q3],['Asimetría',S.sk],['Curtosis (exceso)',S.ku],['IC 95% media (inf.)',S.m-1.96*S.sd/sq(S.n)],['IC 95% media (sup.)',S.m+1.96*S.sd/sq(S.n)]];$('st').innerHTML=g.map(a=>`<div><span>${a[0]}</span>${fx(a[1])}</div>`).join('');
+const e=edges(),o=new Array(NB).fill(0);X.forEach(v=>o[Math.min(NB-1,Math.floor((v-e[0])/e[1]))]++);let ac=0;$('fq').innerHTML='<thead><tr><th>Clase</th><th>Desde</th><th>Hasta</th><th>Frecuencia</th><th>Relativa</th><th>Acumulada</th></tr></thead><tbody>'+o.map((k,i)=>{ac+=k;return`<tr><td>${i+1}</td><td>${fx(e[0]+i*e[1])}</td><td>${fx(e[0]+(i+1)*e[1])}</td><td>${k}</td><td>${fx(k/S.n)}</td><td>${fx(ac/S.n)}</td></tr>`}).join('')+'</tbody>'}
+function fit(){const al=+$('al').value;$('fr').innerHTML='<thead><tr><th>Gráf.</th><th>#</th><th>Distribución</th><th>Parámetros</th><th>K-S</th><th>p (K-S)</th><th>A-D</th><th>χ²</th><th>p (χ²)</th><th>Acepta</th><th>Puntaje</th></tr></thead><tbody>'+R.map((r,i)=>`<tr class="${SEL.has(i)?'on':''}"><td><input type="checkbox" data-i="${i}" ${SEL.has(i)?'checked':''} aria-label="Graficar ${lab(r)}"></td><td>${i+1}</td><td>${lab(r)}</td><td>${r.d.pn.map((n,j)=>n+'='+fx(r.p[j])).join(', ')}</td><td>${fx(r.ks)} (${r.rks})</td><td>${fx(r.kp)}</td><td>${fx(r.ad)} (${r.rad})</td><td>${fx(r.ch)} (${r.rch})</td><td>${fx(r.cp)}</td><td>${r.kp>=al&&!(r.cp<al)?'Sí':'No'}</td><td>${r.sc}</td></tr>`).join('')+'</tbody>';
+document.querySelectorAll('#fr input').forEach(c=>c.onchange=()=>{c.checked?SEL.add(+c.dataset.i):SEL.delete(+c.dataset.i);c.closest('tr').classList.toggle('on',c.checked)})}
+$('so').onchange=()=>{rank();fillSel();fit()};$('al').onchange=fit;$('sa').onclick=()=>{SEL=new Set([0,1,2].filter(i=>R[i]));fit();tab('g')};
+function fillSel(){const o=R.map((r,i)=>`<option value="${i}">${lab(r)}</option>`).join('');$('cc').innerHTML=o;$('gs').innerHTML=o;parm()}
+function parm(){const r=R[+$('cc').value];if(!r)return;$('cpar').innerHTML=r.d.pn.map((n,j)=>`<label>${n} <input type="number" step="any" data-j="${j}" value="${fm(r.p[j])}"></label>`).join('');calc()}
+const cp=()=>{const r=R[+$('cc').value];return{d:r.d,p:[...document.querySelectorAll('#cpar input')].map(i=>+i.value)}};
+function calc(){if(!R.length)return;const{d,p}=cp(),x=+$('cx').value,a=+$('ca').value,b=+$('cb').value,u=+$('cq').value,w={d,p},n=500;let qs=[];for(let i=0;i<n;i++)qs.push(quant(w,(i+.5)/n));const m=mean(qs);
+$('co').innerHTML=[['P(X ≤ x)',d.c(p,x)],['P(X > x)',1-d.c(p,x)],['f(x) densidad',d.f(p,x)],['P(a < X ≤ b)',d.c(p,b)-d.c(p,a)],['Cuantil de P',quant(w,Math.min(.999999,Math.max(1e-6,u)))],['Mediana',quant(w,.5)],['Media (numérica)',m],['Desv. est. (numérica)',sq(mean(qs.map(v=>(v-m)**2)))]].map(a=>`<div><span>${a[0]}</span>${fx(a[1])}</div>`).join('')}
+$('cc').onchange=parm;$('cg').onclick=calc;$('cm').onclick=()=>{const{d,p}=cp();try{const t=test(d,p,X);R.push({d,p,...t,man:1,rks:R.length+1,rad:R.length+1,rch:R.length+1,sc:99});rank();fillSel();fit();tab('f')}catch(e){alert('Con esos parámetros la distribución no es válida.')}};
+$('gg').onclick=()=>{const r=R[+$('gs').value];if(!r)return;const n=Math.min(20000,Math.max(1,+$('gn').value||100));$('gt').value=Array.from({length:n},()=>fm(quant(r,Math.random()))).join('\n')};
 $('gc').onclick=()=>{$('gt').select();try{navigator.clipboard.writeText($('gt').value)}catch(e){document.execCommand('copy')}};
 $('gx').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['valor\n'+$('gt').value],{type:'text/csv'}));a.download='artemis_aleatorios.csv';a.click()};
+let V=null,M=null;$('nb').onchange=e=>{NB=Math.min(100,Math.max(3,+e.target.value||10));R.forEach(r=>Object.assign(r,test(r.d,r.p,X)));rank();stat();fit();draw()};$('ct').onchange=()=>{V=null;draw()};$('rz').onclick=()=>{V=null;draw()};
+$('pg').onclick=()=>{const a=document.createElement('a');a.href=$('cv').toDataURL('image/png');a.download='artemis_grafico.png';a.click()};
+function draw(){const c=$('cv');if(!R.length||!$('p-g').classList.contains('on'))return;const dpr=devicePixelRatio||1,W=c.clientWidth,H=c.clientHeight;c.width=W*dpr;c.height=H*dpr;const g=c.getContext('2d');g.scale(dpr,dpr);const cs=getComputedStyle(document.documentElement),col=n=>cs.getPropertyValue(n).trim(),t=$('ct').value,n=S.n,
+rs=[...SEL].filter(i=>R[i]).slice(0,6).map(i=>R[i]);$('lg').innerHTML=rs.map((r,i)=>`<span style="color:${COL[i]}">■ ${lab(r)}</span>`).join('  ')||'<span class="mu">Marca distribuciones en la pestaña Ajuste.</span>';
+const pad=.05*(S.max-S.min),e=edges(),ser=[];let x0,x1;
+if(t=='pp'){x0=0;x1=1;rs.forEach(r=>ser.push(X.map((v,i)=>[Math.min(1,Math.max(0,r.d.c(r.p,v))),(i+.5)/n])))}
+else if(t=='qq'){rs.forEach(r=>ser.push(X.map((v,i)=>[quant(r,(i+.5)/n),v])));const a=ser.flat().flat();x0=Math.min(...a,S.min);x1=Math.max(...a,S.max)}
+else{x0=V?V[0]:S.min-pad;x1=V?V[1]:S.max+pad;const f={pdf:(r,x)=>r.d.f(r.p,x),cdf:(r,x)=>r.d.c(r.p,x),sup:(r,x)=>1-r.d.c(r.p,x),haz:(r,x)=>r.d.f(r.p,x)/(1-r.d.c(r.p,x)),chz:(r,x)=>-L(1-r.d.c(r.p,x))}[t];
+rs.forEach(r=>{const a=[];if(t=='dif')X.forEach((v,i)=>a.push([v,r.d.c(r.p,v)-(i+.5)/n]));else for(let i=0;i<=300;i++){const x=x0+(x1-x0)*i/300;a.push([x,f(r,x)])}ser.push(a)})}
+const w=e[1],cnt=new Array(NB).fill(0);X.forEach(v=>cnt[Math.min(NB-1,Math.floor((v-e[0])/w))]++);
+let ys=ser.flat().map(q=>q[1]).filter(isFinite);if(t=='pdf')ys.push(...cnt.map(k=>k/(n*w)));if(t=='haz'){const s=[...ys].sort((a,b)=>a-b);ys=ys.filter(v=>v<=(s[Math.floor(.95*s.length)]||1)*3)}
+let y0=t=='dif'?Math.min(0,...ys):(t=='pp'||t=='qq')?x0:0,y1=(t=='pp'||t=='qq')?x1:Math.max(...ys,1e-9);if(t=='cdf'||t=='sup')y1=Math.max(y1,1);const ml=52,mb=26,mt=10,pw=W-ml-12,ph=H-mb-mt;if(t!='pp'&&t!='qq'&&t!='dif')y1*=1.06;if(t=='dif'){y1+=.02;y0-=.02}
+const sx=v=>ml+(v-x0)/(x1-x0)*pw,sy=v=>mt+ph-(v-y0)/(y1-y0)*ph;M={x0,x1,y0,y1,ml,mt,pw,ph};
+g.font='12px "Segoe UI",sans-serif';g.lineWidth=1;for(let i=0;i<=5;i++){const yy=mt+ph*i/5,xx=ml+pw*i/5;g.strokeStyle=col('--bd');g.beginPath();g.moveTo(ml,yy);g.lineTo(ml+pw,yy);g.stroke();g.fillStyle=col('--mu');g.textAlign='right';g.fillText(fx(y1-(y1-y0)*i/5),ml-4,yy+4);g.textAlign='center';g.fillText(fx(x0+(x1-x0)*i/5),xx,H-8)}
+g.save();g.beginPath();g.rect(ml,mt,pw,ph);g.clip();
+if(t=='pdf'){g.fillStyle=col('--ac');g.globalAlpha=.3;cnt.forEach((k,i)=>{const a=sx(e[0]+i*w),b=sx(e[0]+(i+1)*w),h=k/(n*w);g.fillRect(a,sy(h),b-a-1,sy(0)-sy(h))});g.globalAlpha=1}
+if(t=='cdf'||t=='sup'){g.strokeStyle=col('--mu');g.lineWidth=1.5;g.beginPath();g.moveTo(sx(x0),sy(t=='cdf'?0:1));X.forEach((v,i)=>{g.lineTo(sx(v),sy(t=='cdf'?i/n:1-i/n));g.lineTo(sx(v),sy(t=='cdf'?(i+1)/n:1-(i+1)/n))});g.lineTo(sx(x1),sy(t=='cdf'?1:0));g.stroke()}
+if(t=='pp'||t=='qq'){g.strokeStyle=col('--mu');g.beginPath();g.moveTo(sx(x0),sy(x0));g.lineTo(sx(x1),sy(x1));g.stroke()}
+ser.forEach((a,k)=>{g.strokeStyle=g.fillStyle=COL[k];g.lineWidth=2;g.beginPath();let on=0;a.forEach(q=>{if(!isFinite(q[1])||q[1]>y1*2){on=0;return}if(t=='pp'||t=='qq'||t=='dif'&&0){g.fillRect(sx(q[0])-1.5,sy(q[1])-1.5,3,3);return}on?g.lineTo(sx(q[0]),sy(q[1])):g.moveTo(sx(q[0]),sy(q[1]));on=1});g.stroke()});g.restore()}
+const cv=$('cv');function xy(e){const b=cv.getBoundingClientRect();return[(e.clientX-b.left-M.ml)/M.pw,e.clientY-b.top]}
+cv.addEventListener('pointermove',e=>{if(!M)return;const[u,y]=xy(e),x=M.x0+u*(M.x1-M.x0),v=M.y1-(y-M.mt)/M.ph*(M.y1-M.y0);if(e.buttons&&!['pp','qq'].includes($('ct').value)){V=[M.x0-(e.movementX/M.pw)*(M.x1-M.x0),M.x1-(e.movementX/M.pw)*(M.x1-M.x0)];draw()}$('ro').textContent=`x = ${fx(x)}   y = ${fx(v)}`});
+cv.addEventListener('wheel',e=>{if(!M||['pp','qq'].includes($('ct').value))return;e.preventDefault();const[u]=xy(e),k=e.deltaY>0?1.2:1/1.2,c=M.x0+u*(M.x1-M.x0);V=[c-(c-M.x0)*k,c+(M.x1-c)*k];draw()},{passive:false});
+addEventListener('resize',draw);grid([]);
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
-addEventListener('resize',()=>{if(R.length)draw()});
 </script></body></html>
